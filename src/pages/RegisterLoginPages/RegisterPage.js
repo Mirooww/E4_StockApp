@@ -1,10 +1,11 @@
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, signOut } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 
 import { useState } from "react";
 import { auth, db } from "../../../firebaseConfig";
 
-import { KeyboardAvoidingView, TextInput, View, Button, StyleSheet } from "react-native-web";
+import { KeyboardAvoidingView, TextInput, View, Button, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function RegisterPage() {
     const [email, setEmail] = useState("");
@@ -12,6 +13,7 @@ export default function RegisterPage() {
     const [lastName, setLastName] = useState("");
 
     const [password, setPassword] = useState("");
+
     const handleSignup = async () => {
         if (email && password) {
             try {
@@ -23,11 +25,15 @@ export default function RegisterPage() {
                 });
                 console.log("Inscription réussie");
                 await sendEmailVerification(userCredential.user);
+                await signOut(auth);
+                console.log("Déconnecté");
+                navigation.navigate("Login");
             } catch (error) {
                 console.log("Erreur lors de l'inscription :", error.message);
             }
         }
     };
+    const navigation = useNavigation();
 
     return (
         <KeyboardAvoidingView style={styles.container} behavior="padding">

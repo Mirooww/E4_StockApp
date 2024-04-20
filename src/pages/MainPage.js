@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { StyleSheet } from "react-native-web";
+import { StyleSheet } from "react-native";
 import { auth } from "../../firebaseConfig";
 import React from "react";
 import { signOut } from "firebase/auth";
@@ -7,6 +7,7 @@ import { signOut } from "firebase/auth";
 export default function MainPage() {
     const Logout = async () => {
         await signOut(auth);
+        console.log("Déconnecté");
     };
 
     return (

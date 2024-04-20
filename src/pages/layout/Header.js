@@ -15,7 +15,7 @@ export default function Header() {
 
 const styles = StyleSheet.create({
    topBar: {
-      height: "50px",
+      height: 50,
       textAlign: "center",
       display: "flex",
       justifyContent: "center",
@@ -25,15 +25,15 @@ const styles = StyleSheet.create({
    },
    categContainer: {
       width: "100%",
-      height: "50px",
+      height: 50,
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-around",
       alignItems: "center",
    },
    categ: {
-      fontSize: "20px",
-      width: "90px",
+      fontSize: 20,
+      width: 90,
       textAlign: "center",
    },
 });

@@ -20,7 +20,7 @@ export default function App() {
 
     const Stack = createStackNavigator();
 
-    if (!user) {
+    if (!user || !user.emailVerified) {
         return (
             <>
                 <NavigationContainer>

@@ -33,7 +33,7 @@ export default function Footer() {
 const styles = StyleSheet.create({
    categContainer: {
       width: "100%",
-      height: "75px",
+      height: 75,
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-around",
@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
    categ: {
       borderWidth: 1,
       borderColor: "ddd",
-      width: "35px",
-      height: "35px",
+      width: 35,
+      height: 35,
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
