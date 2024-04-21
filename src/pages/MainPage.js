@@ -3,22 +3,25 @@ import { View, Text, TouchableOpacity, FlatList, ScrollView } from "react-native
 import { StyleSheet } from "react-native";
 import { auth } from "../../firebaseConfig";
 import { signOut } from "firebase/auth";
+import { useNavigation } from "@react-navigation/native";
 
 export default function MainPage() {
     const [plats, setPlats] = useState([]);
 
+    const navigation = useNavigation();
     const adresseIp = "http://192.168.1.120:8000";
-    useEffect(() => {
-        const fetchPlats = async () => {
-            try {
-                const response = await fetch(`${adresseIp}/admin/plat/`);
-                const data = await response.json();
-                setPlats(data);
-            } catch (error) {
-                console.error("Erreur lors de la récupération des plats:", error);
-            }
-        };
 
+    const fetchPlats = async () => {
+        try {
+            const response = await fetch(`${adresseIp}/admin/plat/`);
+            const data = await response.json();
+            setPlats(data);
+        } catch (error) {
+            console.error("Erreur lors de la récupération des plats:", error);
+        }
+    };
+
+    useEffect(() => {
         fetchPlats();
     }, []);
 
@@ -30,15 +33,21 @@ export default function MainPage() {
     return (
         <View style={styles.content}>
             <Text>Bienvenue</Text>
+
             <FlatList
                 data={plats}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <View style={styles.platItem}>
+                    <TouchableOpacity
+                        style={styles.platItem}
+                        onPress={() => navigation.navigate("EditPlat", { id: item.id })} // Naviguez vers MoreInfo avec l'id du plat
+                    >
                         <Text style={styles.platNom}>{item.Nom}</Text>
                         <Text>{item.Description}</Text>
-                    </View>
+                    </TouchableOpacity>
                 )}
+                onRefresh={fetchPlats}
+                refreshing={false}
             />
 
             <TouchableOpacity onPress={Logout}>

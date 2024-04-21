@@ -9,13 +9,13 @@ export default function Header() {
         <View>
             <Text style={styles.topBar}>NEXUM</Text>
             <View style={styles.categContainer}>
-                <TouchableOpacity onPress={() => navigation.navigate("Categorie")}>
+                <TouchableOpacity onPress={() => navigation.navigate("GetRegion")}>
                     <Text style={styles.categ}>Région</Text>
                 </TouchableOpacity>
                 {/* <TouchableOpacity onPress={() => navigation.navigate("Plat")}>
                     <Text style={styles.categ}>Plat</Text>
                 </TouchableOpacity> */}
-                <TouchableOpacity onPress={() => navigation.navigate("Ingredient")}>
+                <TouchableOpacity onPress={() => navigation.navigate("GetIngredient")}>
                     <Text style={styles.categ}>Ingredient</Text>
                 </TouchableOpacity>
             </View>

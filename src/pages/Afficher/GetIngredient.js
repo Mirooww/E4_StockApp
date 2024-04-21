@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import React from "react";
 import { useState, useEffect } from "react";
 
-export default function Ingredient() {
+export default function GetIngredient() {
     const adresseIp = "http://192.168.1.120:8000";
 
     useEffect(() => {

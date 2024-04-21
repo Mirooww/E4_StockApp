@@ -1,6 +1,9 @@
 import React from "react";
 import { View, StyleSheet } from "react-native-web";
 
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
 import useAuth from "./hooks/useAuth";
 
 import LoginPage from "./src/pages/RegisterLoginPages/LoginPage";
@@ -12,12 +15,14 @@ import Footer from "./src/pages/layout/Footer";
 
 import Profil from "./src/pages/Profil";
 
-import Categorie from "./src/pages/Informations/Categorie";
-import Plat from "./src/pages/Informations/Plat";
-import Ingredient from "./src/pages/Informations/Ingredient";
+import GetCategorie from "./src/pages/Afficher/GetCategorie";
+import GetIngredient from "./src/pages/Afficher/GetIngredient";
 
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import CreateCategorie from "./src/pages/Ajouter/CreateRegion";
+import CreatePlat from "./src/pages/Ajouter/CreatePlat";
+import CreateIngredient from "./src/pages/Ajouter/CreateIngredient";
+
+import EditPlat from "./src/pages/Edit/EditPlat";
 
 export default function App() {
     const { user } = useAuth();
@@ -42,9 +47,15 @@ export default function App() {
                 <Stack.Navigator initialRouteName="Home">
                     <Stack.Screen name="Home" component={MainPage} options={{ headerShown: false }} />
                     <Stack.Screen name="Profil" component={Profil} options={{ headerShown: false }} />
-                    <Stack.Screen name="Categorie" component={Categorie} options={{ headerShown: false }} />
-                    <Stack.Screen name="Plat" component={Plat} options={{ headerShown: false }} />
-                    <Stack.Screen name="Ingredient" component={Ingredient} options={{ headerShown: false }} />
+                    {/* GET */}
+                    <Stack.Screen name="GetRegion" component={GetCategorie} options={{ headerShown: false }} />
+                    <Stack.Screen name="GetIngredient" component={GetIngredient} options={{ headerShown: false }} />
+                    {/* CREATE */}
+                    <Stack.Screen name="CreateRegion" component={CreateCategorie} options={{ headerShown: false }} />
+                    <Stack.Screen name="CreatePlat" component={CreatePlat} options={{ headerShown: false }} />
+                    <Stack.Screen name="CreateIngredient" component={CreateIngredient} options={{ headerShown: false }} />
+                    {/* EDIT */}
+                    <Stack.Screen name="EditPlat" component={EditPlat} options={{ headerShown: false }} />
                 </Stack.Navigator>
                 <Footer />
             </NavigationContainer>
