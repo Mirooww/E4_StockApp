@@ -1,10 +1,13 @@
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView, TouchableOpacity } from "react-native";
 import { StyleSheet } from "react-native";
 
 import React from "react";
 import { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 export default function GetIngredient() {
+    const navigation = useNavigation();
+
     const adresseIp = "http://192.168.1.120:8000";
 
     useEffect(() => {
@@ -22,15 +25,37 @@ export default function GetIngredient() {
 
     const [ingredients, setIngredients] = useState([]);
 
+    const deleteIngredient = async (id) => {
+        try {
+            const response = await fetch(`${adresseIp}/admin/ingredient/${id}`, {
+                method: "DELETE",
+            });
+            if (response.ok) {
+                // Supprimez l'ingrédient de l'état pour mettre à jour l'interface utilisateur
+                setIngredients(ingredients.filter((item) => item.id !== id));
+                alert("Ingrédient supprimé avec succès");
+            } else {
+                alert("Erreur lors de la suppression de l'ingrédient");
+            }
+        } catch (error) {
+            console.error("Erreur lors de la suppression de l'ingrédient:", error);
+        }
+    };
+
     return (
         <View style={styles.content}>
             <Text>Ingrédient</Text>
 
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.scrollViewStyle}>
                 {ingredients.map((item) => (
-                    <View key={item.id.toString()} style={styles.ingredientItem}>
-                        <Text style={styles.ingredientNom}>{item.Nom}</Text>
-                    </View>
+                    <TouchableOpacity key={item.id.toString()} onPress={() => navigation.navigate("EditIngredient", { id: item.id })}>
+                        <View style={styles.ingredientItem}>
+                            <Text style={styles.ingredientNom}>{item.Nom}</Text>
+                        </View>
+                        <TouchableOpacity onPress={() => deleteIngredient(item.id)} style={styles.deleteButton}>
+                            <Text style={styles.deleteButtonText}>Supprimer</Text>
+                        </TouchableOpacity>
+                    </TouchableOpacity>
                 ))}
             </ScrollView>
         </View>
@@ -65,5 +90,15 @@ const styles = StyleSheet.create({
     ingredientNom: {
         fontWeight: "bold",
         color: "#2a5d84",
+    },
+    deleteButton: {
+        padding: 3,
+        backgroundColor: "red",
+        borderRadius: 5,
+        marginTop: 5,
+    },
+    deleteButtonText: {
+        color: "white",
+        fontWeight: "bold",
     },
 });

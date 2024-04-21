@@ -1,10 +1,13 @@
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView, TouchableOpacity } from "react-native";
 import { StyleSheet } from "react-native";
 
 import React from "react";
 import { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 export default function GetCategorie() {
+    const navigation = useNavigation();
+
     const adresseIp = "http://192.168.1.120:8000";
 
     useEffect(() => {
@@ -22,14 +25,35 @@ export default function GetCategorie() {
 
     const [regions, setRegions] = useState([]);
 
+    const deleteRegion = async (id) => {
+        try {
+            const response = await fetch(`${adresseIp}/admin/region/${id}`, {
+                method: "DELETE",
+            });
+            if (response.ok) {
+                // Supprimez la région de l'état pour mettre à jour l'interface utilisateur
+                setRegions(regions.filter((item) => item.id !== id));
+                alert("Région supprimée avec succès");
+            } else {
+                alert("Erreur lors de la suppression de la région");
+            }
+        } catch (error) {
+            console.error("Erreur lors de la suppression de la région:", error);
+        }
+    };
+
     return (
         <View style={styles.content}>
             <Text>Regions</Text>
-
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.scrollViewStyle}>
                 {regions.map((item) => (
                     <View key={item.id.toString()} style={styles.regionItem}>
-                        <Text style={styles.regionNom}>{item.Nom}</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate("EditRegion", { id: item.id })}>
+                            <Text style={styles.regionNom}>{item.Nom}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => deleteRegion(item.id)} style={styles.deleteButton}>
+                            <Text style={styles.deleteButtonText}>Supprimer</Text>
+                        </TouchableOpacity>
                     </View>
                 ))}
             </ScrollView>
@@ -63,5 +87,15 @@ const styles = StyleSheet.create({
     regionNom: {
         fontWeight: "bold",
         color: "#a83f39",
+    },
+    deleteButton: {
+        padding: 3,
+        backgroundColor: "red",
+        borderRadius: 5,
+        marginTop: 5,
+    },
+    deleteButtonText: {
+        color: "white",
+        fontWeight: "bold",
     },
 });

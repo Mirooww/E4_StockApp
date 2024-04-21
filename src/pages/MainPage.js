@@ -30,6 +30,23 @@ export default function MainPage() {
         console.log("Déconnecté");
     };
 
+    const deletePlat = async (id) => {
+        try {
+            const response = await fetch(`${adresseIp}/admin/plat/${id}`, {
+                method: "DELETE",
+            });
+            if (response.ok) {
+                // Supprimez le plat de l'état pour mettre à jour l'interface utilisateur
+                setPlats(plats.filter((plat) => plat.id !== id));
+                alert("Plat supprimé avec succès");
+            } else {
+                alert("Erreur lors de la suppression du plat");
+            }
+        } catch (error) {
+            console.error("Erreur lors de la suppression du plat:", error);
+        }
+    };
+
     return (
         <View style={styles.content}>
             <Text>Bienvenue</Text>
@@ -38,13 +55,15 @@ export default function MainPage() {
                 data={plats}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <TouchableOpacity
-                        style={styles.platItem}
-                        onPress={() => navigation.navigate("EditPlat", { id: item.id })} // Naviguez vers MoreInfo avec l'id du plat
-                    >
-                        <Text style={styles.platNom}>{item.Nom}</Text>
-                        <Text>{item.Description}</Text>
-                    </TouchableOpacity>
+                    <View style={styles.platItem}>
+                        <TouchableOpacity onPress={() => navigation.navigate("EditPlat", { id: item.id })}>
+                            <Text style={styles.platNom}>{item.Nom}</Text>
+                            <Text>{item.Description}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => deletePlat(item.id)} style={styles.deleteButton}>
+                            <Text style={styles.deleteButtonText}>Supprimer</Text>
+                        </TouchableOpacity>
+                    </View>
                 )}
                 onRefresh={fetchPlats}
                 refreshing={false}
@@ -83,5 +102,17 @@ const styles = StyleSheet.create({
     },
     platNom: {
         fontWeight: "bold",
+    },
+    deleteButton: {
+        padding: 10,
+        backgroundColor: "red",
+        borderRadius: 5,
+        marginTop: 5,
+        alignSelf: "flex-end", // Ajoutez ceci pour aligner le bouton à droite
+    },
+    deleteButtonText: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center",
     },
 });

@@ -23,6 +23,8 @@ import CreatePlat from "./src/pages/Ajouter/CreatePlat";
 import CreateIngredient from "./src/pages/Ajouter/CreateIngredient";
 
 import EditPlat from "./src/pages/Edit/EditPlat";
+import EditRegion from "./src/pages/Edit/EditRegion";
+import EditIngredient from "./src/pages/Edit/EditIngredient";
 
 export default function App() {
     const { user } = useAuth();
@@ -56,6 +58,8 @@ export default function App() {
                     <Stack.Screen name="CreateIngredient" component={CreateIngredient} options={{ headerShown: false }} />
                     {/* EDIT */}
                     <Stack.Screen name="EditPlat" component={EditPlat} options={{ headerShown: false }} />
+                    <Stack.Screen name="EditRegion" component={EditRegion} options={{ headerShown: false }} />
+                    <Stack.Screen name="EditIngredient" component={EditIngredient} options={{ headerShown: false }} />
                 </Stack.Navigator>
                 <Footer />
             </NavigationContainer>
