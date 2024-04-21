@@ -12,6 +12,10 @@ import Footer from "./src/pages/layout/Footer";
 
 import Profil from "./src/pages/Profil";
 
+import Categorie from "./src/pages/Informations/Categorie";
+import Plat from "./src/pages/Informations/Plat";
+import Ingredient from "./src/pages/Informations/Ingredient";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -38,6 +42,9 @@ export default function App() {
                 <Stack.Navigator initialRouteName="Home">
                     <Stack.Screen name="Home" component={MainPage} options={{ headerShown: false }} />
                     <Stack.Screen name="Profil" component={Profil} options={{ headerShown: false }} />
+                    <Stack.Screen name="Categorie" component={Categorie} options={{ headerShown: false }} />
+                    <Stack.Screen name="Plat" component={Plat} options={{ headerShown: false }} />
+                    <Stack.Screen name="Ingredient" component={Ingredient} options={{ headerShown: false }} />
                 </Stack.Navigator>
                 <Footer />
             </NavigationContainer>

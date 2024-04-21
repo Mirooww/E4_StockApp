@@ -6,8 +6,6 @@ import { signOut } from "firebase/auth";
 
 export default function MainPage() {
     const [plats, setPlats] = useState([]);
-    const [ingredients, setIngredients] = useState([]);
-    const [regions, setRegions] = useState([]);
 
     const adresseIp = "http://192.168.1.120:8000";
     useEffect(() => {
@@ -20,29 +18,8 @@ export default function MainPage() {
                 console.error("Erreur lors de la récupération des plats:", error);
             }
         };
-        const fetchIngredients = async () => {
-            try {
-                const response = await fetch(`${adresseIp}/admin/plat/`);
-                const data = await response.json();
-                setIngredients(data);
-            } catch (error) {
-                console.error("Erreur lors de la récupération des ingrédients:", error);
-            }
-        };
-
-        const fetchRegions = async () => {
-            try {
-                const response = await fetch(`${adresseIp}/admin/plat/`);
-                const data = await response.json();
-                setRegions(data);
-            } catch (error) {
-                console.error("Erreur lors de la récupération des régions:", error);
-            }
-        };
 
         fetchPlats();
-        fetchIngredients();
-        fetchRegions();
     }, []);
 
     const Logout = async () => {
@@ -63,25 +40,7 @@ export default function MainPage() {
                     </View>
                 )}
             />
-            <Text>Ingrédient</Text>
 
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.scrollViewStyle}>
-                {ingredients.map((item) => (
-                    <View key={item.id.toString()} style={styles.ingredientItem}>
-                        <Text style={styles.ingredientNom}>{item.Nom}</Text>
-                    </View>
-                ))}
-            </ScrollView>
-
-            <Text>Région</Text>
-
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.scrollViewStyle}>
-                {regions.map((item) => (
-                    <View key={item.id.toString()} style={styles.regionItem}>
-                        <Text style={styles.regionNom}>{item.Nom}</Text>
-                    </View>
-                ))}
-            </ScrollView>
             <TouchableOpacity onPress={Logout}>
                 <Text>Se déconnecter</Text>
             </TouchableOpacity>
@@ -96,9 +55,7 @@ const styles = StyleSheet.create({
     ingredientItem: {
         marginRight: 10,
     },
-    regionItem: {
-        marginRight: 10,
-    },
+
     content: {
         display: "flex",
         minHeight: "90vh",
@@ -117,29 +74,5 @@ const styles = StyleSheet.create({
     },
     platNom: {
         fontWeight: "bold",
-    },
-    ingredientItem: {
-        padding: 20,
-        marginVertical: 8,
-        borderWidth: 1,
-        borderColor: "#ddd",
-        borderRadius: 5,
-        backgroundColor: "#f9f9f9",
-    },
-    ingredientNom: {
-        fontWeight: "bold",
-        color: "#2a5d84",
-    },
-    regionItem: {
-        padding: 15,
-        marginVertical: 6,
-        borderWidth: 1,
-        borderColor: "#bbb",
-        borderRadius: 5,
-        backgroundColor: "#fff0f0",
-    },
-    regionNom: {
-        fontWeight: "bold",
-        color: "#a83f39",
     },
 });
