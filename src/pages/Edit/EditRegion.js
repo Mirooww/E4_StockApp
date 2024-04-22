@@ -17,6 +17,7 @@ function EditRegion({ route, navigation }) {
          .then((data) => {
             setRegion(data);
             setName(data.Nom);
+            console.log(name);
          });
    }, [id]);
 
@@ -49,7 +50,7 @@ function EditRegion({ route, navigation }) {
 
    return (
       <View style={styles.container}>
-         <TextInput style={styles.input} value={JSON.stringify(region.nom)} onChangeText={setName} placeholder="Nom de la région" />
+         <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Nom de la région" />
 
          <Button title="Mettre à jour le plat" onPress={updateRegion} />
       </View>

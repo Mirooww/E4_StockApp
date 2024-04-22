@@ -16,7 +16,7 @@ export default function EditIngredient({ route, navigation }) {
          .then((response) => response.json())
          .then((data) => {
             setIngredient(data);
-            setName(data.nom);
+            setName(data.Nom);
          });
    }, [id]);
 

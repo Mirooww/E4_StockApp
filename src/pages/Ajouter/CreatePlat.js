@@ -135,7 +135,7 @@ export default function CreatePlat() {
                   />
                </View>
                <View style={{ borderWidth: 1, width: "50%" }}>
-                  <Text>Liste : {selectedIngredients.join(", ")}</Text>
+                  <Text>Liste : {JSON.stringify(selectedIngredients)}</Text>
                   <RNPickerSelect
                      onValueChange={(value) => {
                         if (value) {
