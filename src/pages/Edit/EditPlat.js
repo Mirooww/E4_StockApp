@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, TextInput, Text, Button, StyleSheet } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import RNPickerSelect from "react-native-picker-select";
 
 function EditPlat({ route, navigation }) {
@@ -86,39 +87,69 @@ function EditPlat({ route, navigation }) {
       );
 
    return (
-      <View style={styles.container}>
-         <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Nom du plat" />
-         <TextInput style={styles.input} value={description} onChangeText={setDescription} placeholder="Description du plat" />
-         <TextInput style={styles.input} value={prixUnit} onChangeText={setPrixUnit} placeholder="Prix unitaire" />
-         <TextInput style={styles.input} value={stockQtt} onChangeText={setStockQtt} placeholder="Quantité en stock" />
-         <TextInput style={styles.input} value={allergen} onChangeText={setAllergen} placeholder="Allergènes" />
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+         <View style={styles.content}>
+            <Text style={{ textAlign: "center" }}>Nom : </Text>
+            <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Nom du plat" />
 
-         <RNPickerSelect
-            onValueChange={setSelectedRegion}
-            items={regions.map((region) => ({ label: region.Nom, value: region.id }))}
-            placeholder={{ label: "Sélectionnez une région...", value: null }}
-            value={selectedRegion}
-         />
-         <RNPickerSelect
-            onValueChange={setSelectedIngredient}
-            items={ingredients.map((ingredient) => ({ label: ingredient.Nom, value: ingredient.id }))}
-            placeholder={{ label: "Sélectionnez un ingrédient...", value: null }}
-            value={selectedIngredient}
-         />
+            <Text style={{ textAlign: "center" }}>Description : </Text>
+            <TextInput
+               style={[styles.input, { minHeight: 100 }]}
+               value={description}
+               onChangeText={setDescription}
+               placeholder="Description du plat"
+               multiline={true}
+            />
+            <View style={{ flexDirection: "row" }}>
+               <TextInput style={[styles.input, { flex: 1 }]} value={prixUnit} onChangeText={setPrixUnit} placeholder="Prix unitaire" />
+               <TextInput style={[styles.input, { flex: 1 }]} value={stockQtt} onChangeText={setStockQtt} placeholder="Quantité en stock" />
+            </View>
+            <Text style={{ textAlign: "center" }}>Allergenes : </Text>
 
-         <Button title="Mettre à jour le plat" onPress={updatePlat} />
-      </View>
+            <TextInput style={styles.input} value={allergen} onChangeText={setAllergen} placeholder="Allergènes" />
+            <View style={{ flexDirection: "row" }}>
+               <View style={{ borderWidth: 1, width: "50%" }}>
+                  <Text>Region : </Text>
+                  <RNPickerSelect
+                     onValueChange={setSelectedRegion}
+                     items={regions.map((region) => ({ label: region.Nom, value: region.id }))}
+                     placeholder={{ label: "Sélectionnez une région...", value: null }}
+                     value={selectedRegion}
+                  />
+               </View>
+               <View style={{ borderWidth: 1, width: "50%" }}>
+                  <Text>Ingrédient : </Text>
+                  <RNPickerSelect
+                     onValueChange={setSelectedIngredient}
+                     items={ingredients.map((ingredient) => ({ label: ingredient.Nom, value: ingredient.id }))}
+                     placeholder={{ label: "Sélectionnez un ingrédient...", value: null }}
+                     value={selectedIngredient}
+                  />
+               </View>
+            </View>
+
+            <Button title="Mettre à jour le plat" onPress={updatePlat} />
+         </View>
+      </ScrollView>
    );
 }
 
 const styles = StyleSheet.create({
-   container: {
-      flex: 1,
+   scrollViewContent: {
+      flexGrow: 1,
       justifyContent: "center",
-      padding: 10,
+   },
+   content: {
+      display: "flex",
+      minHeight: "100%",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      boxShadow: "0 0 0 1px",
+      borderWidth: 1,
    },
    input: {
-      height: 50,
+      height: 40,
       margin: 12,
       borderWidth: 1,
       padding: 10,

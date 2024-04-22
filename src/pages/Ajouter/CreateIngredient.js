@@ -42,11 +42,12 @@ export default function CreateIngredient() {
 const styles = StyleSheet.create({
    content: {
       display: "flex",
-      minHeight: "90vh",
+      minHeight: "100%",
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
       boxShadow: "0 0 0 1px",
+      borderWidth: 1,
    },
 
    input: {

@@ -106,53 +106,74 @@ export default function CreatePlat() {
    };
 
    return (
-      <View style={styles.content}>
-         <TextInput style={styles.input} value={newPlatName} onChangeText={setNewPlatName} placeholder="Nom du nouveau plat" />
-         <TextInput style={styles.input} value={newPlatDescription} onChangeText={setNewPlatDescription} placeholder="Description du nouveau plat" />
-         <TextInput style={styles.input} value={newPlatPrixUnit} onChangeText={setNewPlatPrixUnit} placeholder="Prix du nouveau plat" />
-         <TextInput style={styles.input} value={newPlatStockQtt} onChangeText={setNewPlatStockQtt} placeholder="Stock du nouveau plat" />
-         <TextInput style={styles.input} value={newPlatAllergen} onChangeText={setNewPlatAllergen} placeholder="Allergen du nouveau plat" />
-         <RNPickerSelect
-            onValueChange={(value) => setSelectedRegion(value)}
-            items={regions.map((region) => ({
-               label: region.Nom,
-               value: region.id,
-            }))}
-            placeholder={{ label: "Sélectionnez une région...", value: null }}
-         />
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+         <View style={styles.content}>
+            <TextInput style={styles.input} value={newPlatName} onChangeText={setNewPlatName} placeholder="Nom du nouveau plat" />
+            <TextInput
+               style={[styles.input, { minHeight: 100 }]}
+               value={newPlatDescription}
+               onChangeText={setNewPlatDescription}
+               placeholder="Description du nouveau plat"
+               multiline={true}
+            />
+            <View style={{ flexDirection: "row" }}>
+               <TextInput style={styles.input} value={newPlatPrixUnit} onChangeText={setNewPlatPrixUnit} placeholder="Prix du nouveau plat" />
+               <TextInput style={styles.input} value={newPlatStockQtt} onChangeText={setNewPlatStockQtt} placeholder="Stock du nouveau plat" />
+            </View>
+            <TextInput style={styles.input} value={newPlatAllergen} onChangeText={setNewPlatAllergen} placeholder="Allergen du nouveau plat" />
+            <View style={{ flexDirection: "row" }}>
+               <View style={{ borderWidth: 1, width: "50%" }}>
+                  <Text>Region : </Text>
 
-         <Text>Liste : {selectedIngredients.join(", ")}</Text>
-         <RNPickerSelect
-            onValueChange={(value) => {
-               if (value) {
-                  const selectedIngredient = ingredients.find((ingredient) => ingredient.id === value);
-                  if (selectedIngredient && !selectedIngredients.some((item) => item.id === selectedIngredient.id)) {
-                     setSelectedIngredients([...selectedIngredients, { id: selectedIngredient.id }]);
-                  }
-               }
-            }}
-            items={ingredients.map((ingredient) => ({
-               label: ingredient.Nom,
-               value: ingredient.id,
-            }))}
-            placeholder={{ label: "Sélectionnez un ingrédient...", value: null }}
-         />
+                  <RNPickerSelect
+                     onValueChange={(value) => setSelectedRegion(value)}
+                     items={regions.map((region) => ({
+                        label: region.Nom,
+                        value: region.id,
+                     }))}
+                     placeholder={{ label: "Sélectionnez une région...", value: null }}
+                  />
+               </View>
+               <View style={{ borderWidth: 1, width: "50%" }}>
+                  <Text>Liste : {selectedIngredients.join(", ")}</Text>
+                  <RNPickerSelect
+                     onValueChange={(value) => {
+                        if (value) {
+                           const selectedIngredient = ingredients.find((ingredient) => ingredient.id === value);
+                           if (selectedIngredient && !selectedIngredients.some((item) => item.id === selectedIngredient.id)) {
+                              setSelectedIngredients([...selectedIngredients, { id: selectedIngredient.id }]);
+                           }
+                        }
+                     }}
+                     items={ingredients.map((ingredient) => ({
+                        label: ingredient.Nom,
+                        value: ingredient.id,
+                     }))}
+                     placeholder={{ label: "Sélectionnez un ingrédient...", value: null }}
+                  />
+               </View>
+            </View>
 
-         <Button title="Ajouter Plat" onPress={addPlat} />
-      </View>
+            <Button title="Ajouter Plat" onPress={addPlat} />
+         </View>
+      </ScrollView>
    );
 }
 
 const styles = StyleSheet.create({
+   scrollViewContent: {
+      flexGrow: 1,
+      justifyContent: "center",
+   },
    content: {
       display: "flex",
-      minHeight: "90vh",
+      minHeight: "100%",
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
       boxShadow: "0 0 0 1px",
+      borderWidth: 1,
    },
-
    input: {
       height: 40,
       margin: 12,
