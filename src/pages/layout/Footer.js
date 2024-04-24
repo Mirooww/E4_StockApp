@@ -11,97 +11,97 @@ export default function Footer() {
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
     };
+
     return (
-        <View>
-            <View style={styles.categContainer}>
-                <TouchableOpacity onPress={() => navigation.navigate("Home")} style={styles.button}>
-                    <FontAwesomeIcon icon={faHouse} style={styles.categ} />
-                </TouchableOpacity>
+        <View style={styles.container}>
+            <TouchableOpacity onPress={() => navigation.navigate("Home")} style={styles.button}>
+                <FontAwesomeIcon icon={faHouse} style={styles.icon} />
+                <Text style={styles.label}>Home</Text>
+            </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => navigation.navigate("Profil")} style={styles.button}>
-                    <FontAwesomeIcon icon={faMagnifyingGlass} style={styles.categ} />
-                </TouchableOpacity>
+            <TouchableOpacity onPress={toggleModal} style={[styles.addButton]}>
+                <FontAwesomeIcon icon={faPlus} style={[styles.icon, styles.addIcon]} />
+            </TouchableOpacity>
 
-                <TouchableOpacity onPress={toggleModal} style={styles.button}>
-                    <FontAwesomeIcon icon={faPlus} style={styles.categ} />
-                </TouchableOpacity>
-
-                <Modal animationType="slide" transparent={true} visible={isModalVisible} onRequestClose={toggleModal}>
-                    <TouchableWithoutFeedback onPress={toggleModal}>
-                        <View style={styles.modalOverlay}>
-                            <View style={styles.modalView}>
-                                <TouchableWithoutFeedback>
-                                    <View>
-                                        <Text style={styles.modalText}>Votre contenu ici</Text>
-                                        <TouchableOpacity style={styles.closeButton} onPress={() => navigation.navigate("CreateRegion")}>
-                                            <Text>Ajouter région</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={styles.closeButton} onPress={() => navigation.navigate("CreatePlat")}>
-                                            <Text>Ajouter plat</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={styles.closeButton} onPress={() => navigation.navigate("CreateIngredient")}>
-                                            <Text>Ajouter ingrédient</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </TouchableWithoutFeedback>
-                            </View>
+            <Modal animationType="slide" transparent={true} visible={isModalVisible} onRequestClose={toggleModal}>
+                <TouchableWithoutFeedback onPress={toggleModal}>
+                    <View style={modal.modalOverlay}>
+                        <View style={modal.modalView}>
+                            <TouchableWithoutFeedback>
+                                <View>
+                                    <TouchableOpacity style={modal.closeButton} onPress={() => navigation.navigate("creerRegion")}>
+                                        <Text style={modal.buttonText}>Ajouter region</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={modal.closeButton} onPress={() => navigation.navigate("creerPlat")}>
+                                        <Text style={modal.buttonText}>Ajouter Plat</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={modal.closeButton} onPress={() => navigation.navigate("creerIngredient")}>
+                                        <Text style={modal.buttonText}>Ajouter Ingrédient</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </TouchableWithoutFeedback>
                         </View>
-                    </TouchableWithoutFeedback>
-                </Modal>
+                    </View>
+                </TouchableWithoutFeedback>
+            </Modal>
 
-                <TouchableOpacity onPress={() => navigation.navigate("Profil")} style={styles.button}>
-                    <FontAwesomeIcon icon={faUser} style={styles.categ} />
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity onPress={() => navigation.navigate("Profil")} style={styles.button}>
+                <FontAwesomeIcon icon={faUser} style={styles.icon} />
+                <Text style={styles.label}>Profile</Text>
+            </TouchableOpacity>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    categContainer: {
-        width: "100%",
-        height: 75,
-        display: "flex",
+    container: {
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",
-        backgroundColor: "#fff", // Ajoutez une couleur de fond si nécessaire
+        backgroundColor: "#fff",
+        borderTopWidth: 1,
+        borderTopColor: "#ddd",
+        paddingBottom: 15,
+        borderWidth: 1,
+        paddingTop: 10,
     },
     button: {
-        width: 50, // Augmentez la largeur pour un bouton plus grand
-        height: 50, // Augmentez la hauteur pour un bouton plus grand
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
     },
-    categ: {
-        borderWidth: 1,
-        borderColor: "#ddd",
-        borderRadius: 100, // Ajoutez un rayon de bordure pour adoucir les coins
-        width: 50, // Augmentez la largeur pour un bouton plus grand
-        height: 50, // Augmentez la hauteur pour un bouton plus grand
+    icon: {
+        fontSize: 24,
+        marginBottom: 5,
+        color: "#555",
+    },
+    label: {
+        fontSize: 12,
+        color: "#555",
+    },
+    addButton: {
+        backgroundColor: "#FF6F61",
+        borderRadius: 25,
+        width: 40,
+        height: 40,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        shadowColor: "#000", // Couleur de l'ombre
-        shadowOffset: {
-            width: 0,
-            height: 2, // Décalage vertical de l'ombre
-        },
-        shadowOpacity: 0.25, // Opacité de l'ombre
-        shadowRadius: 3.84, // Flou de l'ombre
-        elevation: 5, // Elevation pour Android
     },
+});
+
+const modal = StyleSheet.create({
     modalOverlay: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
     },
     modalView: {
-        margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
-        padding: 35,
+        paddingVertical: 30,
+        paddingHorizontal: 20,
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -111,18 +111,21 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        position: "absolute", // Position absolue pour le placer au-dessus du bouton
-        bottom: "10%", // Ajustez la position en fonction de l'emplacement du bouton
-        alignSelf: "center", // Centre le modal
     },
     modalText: {
-        marginBottom: 15,
+        marginBottom: 20,
         textAlign: "center",
+        fontSize: 16,
     },
     closeButton: {
         backgroundColor: "#2196F3",
         borderRadius: 20,
         padding: 10,
-        elevation: 2,
+        marginBottom: 10,
+    },
+    buttonText: {
+        color: "white",
+        textAlign: "center",
+        fontSize: 16,
     },
 });

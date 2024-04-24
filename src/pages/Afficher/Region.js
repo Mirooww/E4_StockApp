@@ -1,45 +1,46 @@
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ImageBackground } from "react-native";
+import { useState } from "react";
 import React from "react";
-import { useState, useEffect } from "react";
-import { Text, View, StyleSheet, ScrollView, ImageBackground, TouchableOpacity } from "react-native";
-import { API_URL } from "@env";
 import { useNavigation } from "@react-navigation/native";
+import { API_URL } from "@env";
 import { useFocusEffect } from "@react-navigation/native";
 
-export default function MainPage() {
+export default function Region() {
     const navigation = useNavigation();
 
-    const [plats, setPlats] = useState([]);
+    const [region, setRegion] = useState([]);
     useFocusEffect(
         React.useCallback(() => {
             const fetchPlats = async () => {
                 try {
-                    const response = await fetch(`${API_URL}admin/recipes`);
+                    const response = await fetch(`${API_URL}admin/regions`);
                     const data = await response.json();
-                    setPlats(data);
+                    setRegion(data);
                 } catch (error) {
-                    console.error("Erreur lors de la récupération des plats:", error);
+                    console.error("Erreur lors de la récupération des régions:", error);
                 }
             };
             fetchPlats();
         }, [])
     );
-
     return (
         <View style={styles.container}>
-            <ScrollView style={styles.scrollView}>
-                {plats.map((plat) => (
-                    <TouchableOpacity onPress={() => navigation.navigate("PlatDetails", { id: plat.id })} key={"container :" + plat.id}>
-                        <ImageBackground key={plat.id} source={require("../../assets/svg/shadow.png")} style={styles.platContainer} resizeMode="cover">
-                            <View style={styles.platImg}></View>
-                            <View style={styles.platDescri}>
-                                <Text style={styles.platDescriTitre}>{plat.Nom}</Text>
-                                <Text style={styles.platDescriStock}> stock : {plat.StockQtt}</Text>
-                                <Text style={styles.platDescriPrix}>{plat.PrixUnit} €</Text>
-                            </View>
-                        </ImageBackground>
-                    </TouchableOpacity>
-                ))}
-            </ScrollView>
+            {region ? (
+                <ScrollView style={styles.scrollView}>
+                    {region.map((plat) => (
+                        <TouchableOpacity onPress={() => navigation.navigate("editerRegion", { id: plat.id })} key={"container :" + plat.id}>
+                            <ImageBackground key={plat.id} source={require("../../../assets/svg/shadow.png")} style={styles.platContainer} resizeMode="cover">
+                                <View style={styles.platImg}></View>
+                                <View style={styles.platDescri}>
+                                    <Text style={styles.platDescriTitre}>{plat.Nom}</Text>
+                                </View>
+                            </ImageBackground>
+                        </TouchableOpacity>
+                    ))}
+                </ScrollView>
+            ) : (
+                <Text style={{ color: "white" }}>Chargement en cours...</Text>
+            )}
         </View>
     );
 }
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row", // Les enfants sont disposés horizontalement
         width: "100%",
-        height: 120,
+        height: 90,
         overflow: "hidden",
     },
     platImg: {

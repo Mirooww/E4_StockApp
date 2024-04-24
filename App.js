@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native-web";
+import { View, StyleSheet, SafeAreaView, ScrollView } from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -12,57 +12,75 @@ import MainPage from "./src/pages/MainPage";
 
 import Header from "./src/pages/layout/Header";
 import Footer from "./src/pages/layout/Footer";
-
+import PlatDetails from "./src/pages/Afficher/PlatDetails";
+import Ingredient from "./src/pages/Afficher/Ingredient";
+import Region from "./src/pages/Afficher/Region";
+import AjouterPlat from "./src/pages/Creer/CreerPlat";
+import EditerPlat from "./src/pages/Editer/EditerPlat";
+import EditIngredient from "./src/pages/Editer/EditerIngredient";
+import EditRegion from "./src/pages/Editer/EditerRegion";
+import CreateCategorie from "./src/pages/Creer/CreerRegion";
+import CreateIngredient from "./src/pages/Creer/CreerIngredient";
 import Profil from "./src/pages/Profil";
 
-import GetCategorie from "./src/pages/Afficher/GetCategorie";
-import GetIngredient from "./src/pages/Afficher/GetIngredient";
-
-import CreateCategorie from "./src/pages/Ajouter/CreateRegion";
-import CreatePlat from "./src/pages/Ajouter/CreatePlat";
-import CreateIngredient from "./src/pages/Ajouter/CreateIngredient";
-
-import EditPlat from "./src/pages/Edit/EditPlat";
-import EditRegion from "./src/pages/Edit/EditRegion";
-import EditIngredient from "./src/pages/Edit/EditIngredient";
+const Stack = createStackNavigator();
 
 export default function App() {
     const { user } = useAuth();
 
-    const Stack = createStackNavigator();
+    return (
+        <SafeAreaView style={styles.container}>
+            <NavigationContainer>
+                {user && user.emailVerified ? (
+                    <>
+                        <View style={styles.header}>
+                            <Header />
+                        </View>
+                        <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+                            <Stack.Screen name="Home" component={MainPage} />
+                            <Stack.Screen name="Profil" component={Profil} />
 
-    if (!user || !user.emailVerified) {
-        return (
-            <>
-                <NavigationContainer>
+                            <Stack.Screen name="PlatDetails" component={PlatDetails} />
+
+                            <Stack.Screen name="Ingredients" component={Ingredient} />
+                            <Stack.Screen name="Regions" component={Region} />
+
+                            <Stack.Screen name="creerPlat" component={AjouterPlat} />
+                            <Stack.Screen name="creerRegion" component={CreateCategorie} />
+                            <Stack.Screen name="creerIngredient" component={CreateIngredient} />
+
+                            <Stack.Screen name="editerPlat" component={EditerPlat} />
+                            <Stack.Screen name="editerIngredient" component={EditIngredient} />
+                            <Stack.Screen name="editerRegion" component={EditRegion} />
+                        </Stack.Navigator>
+                        <View style={styles.footer}>
+                            <Footer />
+                        </View>
+                    </>
+                ) : (
                     <Stack.Navigator initialRouteName="Login">
                         <Stack.Screen name="Login" component={LoginPage} options={{ headerShown: false }} />
                         <Stack.Screen name="Register" component={RegisterPage} options={{ headerShown: false }} />
                     </Stack.Navigator>
-                </NavigationContainer>
-            </>
-        );
-    } else {
-        return (
-            <NavigationContainer>
-                <Header />
-                <Stack.Navigator initialRouteName="Home">
-                    <Stack.Screen name="Home" component={MainPage} options={{ headerShown: false }} />
-                    <Stack.Screen name="Profil" component={Profil} options={{ headerShown: false }} />
-                    {/* GET */}
-                    <Stack.Screen name="GetRegion" component={GetCategorie} options={{ headerShown: false }} />
-                    <Stack.Screen name="GetIngredient" component={GetIngredient} options={{ headerShown: false }} />
-                    {/* CREATE */}
-                    <Stack.Screen name="CreateRegion" component={CreateCategorie} options={{ headerShown: false }} />
-                    <Stack.Screen name="CreatePlat" component={CreatePlat} options={{ headerShown: false }} />
-                    <Stack.Screen name="CreateIngredient" component={CreateIngredient} options={{ headerShown: false }} />
-                    {/* EDIT */}
-                    <Stack.Screen name="EditPlat" component={EditPlat} options={{ headerShown: false }} />
-                    <Stack.Screen name="EditRegion" component={EditRegion} options={{ headerShown: false }} />
-                    <Stack.Screen name="EditIngredient" component={EditIngredient} options={{ headerShown: false }} />
-                </Stack.Navigator>
-                <Footer />
+                )}
             </NavigationContainer>
-        );
-    }
+        </SafeAreaView>
+    );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#fff", // Couleur de fond de l'application
+    },
+    header: {
+        height: 150,
+    },
+    footer: {
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: "red", // Couleur pour visualiser le Footer
+    },
+});

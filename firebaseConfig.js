@@ -3,13 +3,14 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_FIREBASE_KEY } from "@env";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyBHvn87nlTYspKyf0MTQ9Ger_Lk4IxNQ6E",
+    apiKey: `${API_FIREBASE_KEY}`,
     authDomain: "reactnativebackoffi.firebaseapp.com",
     projectId: "reactnativebackoffi",
     storageBucket: "reactnativebackoffi.appspot.com",
