@@ -65,14 +65,14 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         marginBottom: 10,
         display: "flex",
-        flexDirection: "row", // Les enfants sont disposés horizontalement
+        flexDirection: "row",
         width: "100%",
         height: 90,
         overflow: "hidden",
     },
     platImg: {
-        height: "100%", // Hauteur définie
-        aspectRatio: 1, // Le ratio d'aspect 1:1 garantit que la largeur sera
+        height: "100%",
+        aspectRatio: 1,
         borderWidth: 1,
         flex: 0,
         borderColor: "white",
