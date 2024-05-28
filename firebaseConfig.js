@@ -10,14 +10,13 @@ import { API_FIREBASE_KEY } from "@env";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: `${API_FIREBASE_KEY}`,
-    authDomain: "reactnativebackoffi.firebaseapp.com",
-    projectId: "reactnativebackoffi",
-    storageBucket: "reactnativebackoffi.appspot.com",
-    messagingSenderId: "689869979478",
-    appId: "1:689869979478:web:792aae41cb50699be5e0f7",
+    apiKey: "AIzaSyCwTaTwW0ct0ffNVmRAOKDOx67kpS9m2sc",
+    authDomain: "e5-react-native.firebaseapp.com",
+    projectId: "e5-react-native",
+    storageBucket: "e5-react-native.appspot.com",
+    messagingSenderId: "444002362486",
+    appId: "1:444002362486:web:8192bb1b9b3df5dc5ceb57",
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 

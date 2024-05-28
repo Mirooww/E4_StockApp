@@ -13,7 +13,7 @@ export default function MainPage() {
         React.useCallback(() => {
             const fetchPlats = async () => {
                 try {
-                    const response = await fetch(`${API_URL}admin/recipes`);
+                    const response = await fetch(`${API_URL}admin/recipes/`);
                     const data = await response.json();
                     setPlats(data);
                 } catch (error) {
