@@ -10,7 +10,7 @@ import { API_FIREBASE_KEY } from "@env";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyCwTaTwW0ct0ffNVmRAOKDOx67kpS9m2sc",
+    apiKey: process.env.API_FIREBASE_KEYAPI_FIREBASE_KEY,
     authDomain: "e5-react-native.firebaseapp.com",
     projectId: "e5-react-native",
     storageBucket: "e5-react-native.appspot.com",
